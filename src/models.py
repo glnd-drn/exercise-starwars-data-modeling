@@ -12,9 +12,19 @@ class FavoritesPerson(Base):
     id = Column(Integer, primary_key=True)
     user_id = Column(Integer, ForeignKey('user.id'))
     person_id = Column(Integer, ForeignKey('person.id'))
+    rating = Column(Integer, nullable = True)
 
+class FavoritesPlanets(Base):
+    __tablename__='favoritesplanets'
+    id = Column(Integer, primary_key=True)
+    user_id = Column(Integer, ForeignKey('user.id'))
+    planets_id = Column(Integer, ForeignKey('planets.id'))
 
-
+class FavoritesVehicles(Base):
+    __tablename__='favoritesvehicles'       
+    id = Column(Integer, primary_key=True)
+    user_id = Column(Integer, ForeignKey('user.id'))
+    planets_id = Column(Integer, ForeignKey('vehicle.id'))
 
 class Person(Base):
     __tablename__ = 'person'
@@ -24,8 +34,20 @@ class Person(Base):
     name = Column(String(250), nullable=False)
     gender = Column(String(20), nullable=False)
     eyes_color = Column(String(20), nullable=True) #nullable=true funciona para dejar vacia la info.
-    age = Column(Integer, nullable=False) #integer para numeros enteros, como la edad.
-    favorites_user = relationship(FavoritesPerson, backref='person')
+    birth_year = Column(String(250), nullable = False)
+    skin_color = Column(String(250), nullable = False)
+    height = Column(Integer, nullable = False)
+    homeworld = Column(String(250), nullable = False)
+    film = Column(Integer, nullable = False)
+    mass = Column(Integer, nullable = False)
+    created = Column(String(250), nullable = False)
+    edited = Column(String(250), nullable = False)
+    species = Column(Integer, nullable = False)
+    starships = Column(Integer, nullable = False)
+    url = Column(String(250), nullable = False)
+    vehicles = Column(Integer, nullable = False)
+    hair_color = Column(String(250), nullable = False)
+    favorites_person = relationship(FavoritesPerson, backref='person', lazy =True)
     
 
 class User(Base):
@@ -38,16 +60,7 @@ class User(Base):
     email = Column(String(100), nullable=False)
     username = Column(String(100), nullable=False)
     age = Column(Integer, nullable=False) #integer para numeros enteros, como la edad.
-    favorites_person = relationship(FavoritesPerson, backref='user')
-    
-class FavoritesPerson(Base):
-    __tablename__='favoritesperson'
-    id = Column(Integer, primary_key=True)
-    user_id = Column(Integer, ForeignKey('user.id'))
-    person_id = Column(Integer, ForeignKey('person.id'))
-
-
-
+    favorites_person = relationship(FavoritesPerson, backref='user', lazy=True)
 
 class Address(Base):
     __tablename__ = 'address'
